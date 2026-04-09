@@ -1,7 +1,8 @@
 (in-package #:nmebious)
 
 (defun @check-api-key (next)
-  (let ((api-key (cassoc "api-key" (post-parameters*) :test #'string=)))
+  (let ((api-key (or (cassoc "api-key" (post-parameters*) :test #'string=)
+                     (cassoc "api-key" (hunchentoot:get-parameters*) :test #'string=))))
     (if (get-config :api-requires-key)
         (cond ((not api-key)
                (api-fail-with-message "Must provide an API key." 400))

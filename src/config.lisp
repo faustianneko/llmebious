@@ -1,9 +1,5 @@
 (in-package #:nmebious)
 
-;;  ====================== EDIT THIS  ================
-(defvar *config* nil)
-;;  ==================================================
-
 ;; Env file
 ;; (Inside a docker container it won't exist since all env vars will be located inside memory, so we check for that.)
 (defparameter *env*
@@ -144,3 +140,10 @@
 
 (defun unload-config ()
   (setf *config* nil))
+
+;;  ====================== EDIT THIS  ================
+(defvar *config*
+  (extend-config *default-config*
+    :api-requires-key t
+    :socket-server-enabled-p t))
+;;  ==================================================
