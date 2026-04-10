@@ -3,3 +3,5 @@ nmebious
 public/backgrounds/
 public/uploads/
 *.fasl
+nmebious_mcp/
+docs/
