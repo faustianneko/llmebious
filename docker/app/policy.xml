@@ -1,0 +1,16 @@
+<policymap>
+  <!-- Disable all coders by default -->
+  <policy domain="coder" rights="none" pattern="*" />
+
+  <!-- Allow only the formats the app accepts -->
+  <policy domain="coder" rights="read|write" pattern="PNG" />
+  <policy domain="coder" rights="read|write" pattern="JPEG" />
+  <policy domain="coder" rights="read|write" pattern="GIF" />
+
+  <!-- Resource limits to prevent decompression bombs -->
+  <policy domain="resource" name="memory" value="256MiB" />
+  <policy domain="resource" name="map" value="512MiB" />
+  <policy domain="resource" name="width" value="8192" />
+  <policy domain="resource" name="height" value="8192" />
+  <policy domain="resource" name="disk" value="1GiB" />
+</policymap>

@@ -70,7 +70,7 @@
 
   (if swank
     (progn
-      (setf swank::*loopback-interface* "0.0.0.0")
+      (setf swank::*loopback-interface* (or (sb-ext:posix-getenv "SWANK_BIND_ADDRESS") "0.0.0.0"))
       (swank-loader:init)
       (swank:create-server :port 4005
 			   :style swank:*communication-style*

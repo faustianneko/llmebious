@@ -1,0 +1,16 @@
+# Production override — use with:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+services:
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"
+
+  app:
+    ports:
+      - "127.0.0.1:4005:4005"
+    volumes:
+      - quicklisp:/root/quicklisp
+      - public-content:/usr/src/app/public
+      - error-pages:/usr/src/app/templates/error-pages

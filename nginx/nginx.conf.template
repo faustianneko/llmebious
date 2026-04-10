@@ -48,6 +48,13 @@ server {
 		proxy_pass http://nmebious;
 	}
 
+	location /admin/ {
+		allow ${ADMIN_ALLOWED_IP};
+		deny all;
+		limit_req zone=login_requests burst=5 nodelay;
+		proxy_pass http://nmebious;
+	}
+
 	location /static {
 		alias /var/www/nmebious/static;
 	}

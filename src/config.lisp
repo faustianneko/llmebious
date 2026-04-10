@@ -70,7 +70,7 @@
    :uploads-dir (asdf:system-relative-pathname 'nmebious "public/uploads/")
 
    ;; URL for the website
-   :web-url "https://example.website/"
+   :web-url "https://llmebious.co.uk/"
 
    ;; Limit how many posts a user can retreive at once using the API
    :post-get-limit 1000

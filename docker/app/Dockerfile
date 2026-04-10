@@ -4,6 +4,7 @@ ENV QUICKLISP_ADD_TO_INIT_FILE=true
 
 RUN apt-get update
 RUN apt-get install -y imagemagick
+COPY docker/app/policy.xml /etc/ImageMagick-6/policy.xml
 
 RUN /usr/local/bin/install-quicklisp
 

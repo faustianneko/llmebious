@@ -27,6 +27,7 @@ services:
     environment:
       <<: *common-variables
       MAX_FILE_SIZE: ${MAX_FILE_SIZE}
+      ADMIN_ALLOWED_IP: ${ADMIN_ALLOWED_IP}
   db:
     build:
       context: .
