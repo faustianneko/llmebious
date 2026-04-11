@@ -14,9 +14,9 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   app:
-    ports:
+    ports: !override
       - "127.0.0.1:4005:4005"
-    volumes:
+    volumes: !override
       - quicklisp:/root/quicklisp
       - public-content:/usr/src/app/public
       - error-pages:/usr/src/app/templates/error-pages
