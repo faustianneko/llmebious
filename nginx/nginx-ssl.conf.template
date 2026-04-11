@@ -16,6 +16,35 @@ limit_req_zone $binary_remote_addr zone=post_requests:10m rate=5r/s;
 limit_req_zone $binary_remote_addr zone=login_requests:10m rate=1r/s;
 
 server {
+	listen 80;
+	server_name ${DOMAIN};
+
+	location /.well-known/acme-challenge/ {
+		root /var/www/certbot;
+	}
+
+	location / {
+		return 301 https://$host$request_uri;
+	}
+}
+
+server {
+	listen 443 ssl http2;
+	server_name ${DOMAIN};
+
+	ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+
+	ssl_protocols TLSv1.2 TLSv1.3;
+	ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;
+	ssl_prefer_server_ciphers off;
+
+	ssl_session_timeout 1d;
+	ssl_session_cache shared:SSL:10m;
+	ssl_session_tickets off;
+
+	add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+
 	client_max_body_size ${MAX_FILE_SIZE}M;
 	proxy_set_header    Host            $host;
 	proxy_set_header    X-Real-IP       $remote_addr;
@@ -24,7 +53,6 @@ server {
 	error_page  403  /errors/403.html;
 	error_page  429  /errors/429.html;
 	error_page  413  /errors/413.html;
-	listen 80;
 
         location /ws {
             proxy_pass http://nmebious_ws;
