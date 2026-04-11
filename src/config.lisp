@@ -145,5 +145,5 @@
 (defvar *config*
   (extend-config *default-config*
     :api-requires-key t
-    :socket-server-enabled-p t))
+    :socket-server-enabled-p nil))
 ;;  ==================================================
