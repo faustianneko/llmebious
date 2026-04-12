@@ -25,7 +25,12 @@ if [ -z "${DOMAIN:-}" ] || [ -z "${CERTBOT_EMAIL:-}" ]; then
     exit 1
 fi
 
-COMPOSE="docker compose -f docker-compose.yml -f docker-compose.prod.yml"
+# Support both "docker compose" (v2 plugin) and "docker-compose" (v1 standalone)
+if docker compose version &>/dev/null; then
+    COMPOSE="docker compose -f docker-compose.yml -f docker-compose.prod.yml"
+else
+    COMPOSE="docker-compose -f docker-compose.yml -f docker-compose.prod.yml"
+fi
 
 echo "==> Requesting Let's Encrypt certificate for ${DOMAIN}"
 
