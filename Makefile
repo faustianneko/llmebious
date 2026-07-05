@@ -22,7 +22,16 @@ run:
 DC   := $(shell docker compose version >/dev/null 2>&1 && echo "docker compose" || echo "docker-compose")
 PROD := $(DC) -f docker-compose.yml -f docker-compose.prod.yml
 
-.PHONY: deploy prod-up prod-down prod-ps prod-logs backup
+.PHONY: dev dev-down dev-logs deploy prod-up prod-down prod-ps prod-logs backup
+
+dev: ## Build and start the local dev stack (HTTP on :80, all ports exposed)
+	$(DC) up --build
+
+dev-down: ## Stop the dev stack (volumes/data are kept)
+	$(DC) down
+
+dev-logs: ## Follow dev logs
+	$(DC) logs -f --tail=100
 
 deploy: ## Pull latest code and rebuild + redeploy the prod stack
 	git pull

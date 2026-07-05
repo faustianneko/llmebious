@@ -24,9 +24,9 @@ else
 fi
 COMPOSE=(-f docker-compose.yml -f docker-compose.prod.yml)
 PROJECT="${COMPOSE_PROJECT_NAME:-$(basename "$PWD")}"
-# After the refactor uploads live in the dedicated volume. For a pre-cutover
-# backup, point this at the old combined volume:
-#   UPLOADS_VOLUME=<project>_public-content ./scripts/backup.sh
+# Uploads live in the dedicated `uploads` volume. Override only if you ever
+# need to target a different volume:
+#   UPLOADS_VOLUME=<project>_<name> ./scripts/backup.sh
 UPLOADS_VOL="${UPLOADS_VOLUME:-${PROJECT}_uploads}"
 DB_SERVICE="db"
 DB_NAME="nmebious"
