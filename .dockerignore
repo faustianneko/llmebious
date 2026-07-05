@@ -1,1 +1,21 @@
+# Secrets — never bake into an image.
 .env
+
+# Keep build contexts small and prevent runtime/user data from being baked in.
+# Both the app and nginx images build from the repo root.
+.git
+.gitignore
+
+# User uploads live in a volume, never in an image.
+public/uploads/
+
+# Local backups (if BACKUP_DIR ever points inside the repo).
+backups/
+
+# Compiled Lisp artifacts.
+**/*.fasl
+
+# Docs / editor cruft not needed at runtime.
+docs/
+markdown/
+*.md

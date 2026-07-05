@@ -57,3 +57,11 @@ fi
 
 echo ">> done:"
 ls -lh "$DEST"
+
+# Optional retention: prune snapshots older than $BACKUP_KEEP_DAYS days.
+# Unset (default) = keep everything. Set e.g. BACKUP_KEEP_DAYS=14 in cron.
+if [ -n "${BACKUP_KEEP_DAYS:-}" ]; then
+  echo ">> pruning backups older than ${BACKUP_KEEP_DAYS}d ..."
+  find "$(dirname "$DEST")" -maxdepth 1 -type d -name 'nmebious-*' \
+       -mtime "+${BACKUP_KEEP_DAYS}" -exec rm -rf {} +
+fi
