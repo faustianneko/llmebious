@@ -19,7 +19,7 @@ services:
       - "127.0.0.1:4005:4005"
     volumes: !override
       - quicklisp:/root/quicklisp
-      - public-content:/usr/src/app/public
+      - uploads:/usr/src/app/public/uploads
       - error-pages:/usr/src/app/templates/error-pages
 
   certbot:

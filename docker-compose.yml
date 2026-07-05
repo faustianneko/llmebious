@@ -16,9 +16,12 @@ services:
     logging:
       driver: "local"
     volumes:
+      # Static assets (css, img, favicon, backgrounds) are baked into the
+      # nginx image, so they refresh on every build. Only user uploads are
+      # a persistent volume, mounted as a subdir of the static root.
       - type: volume
-        source: public-content
-        target: /var/www/nmebious/static
+        source: uploads
+        target: /var/www/nmebious/static/uploads
         volume:
           nocopy: true
       - type: volume
@@ -57,7 +60,8 @@ services:
       driver: "local"
     volumes:
       - quicklisp:/root/quicklisp
-      - public-content:/usr/src/app/public
+      # Only uploads persist; the rest of public/ comes from the image.
+      - uploads:/usr/src/app/public/uploads
       - error-pages:/usr/src/app/templates/error-pages
       - type: bind
         source: ./src/config.lisp
@@ -69,6 +73,6 @@ services:
 
 volumes:
   quicklisp:
-  public-content:
+  uploads:
   error-pages:
   dbdata:
